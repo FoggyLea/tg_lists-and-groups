@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:14.18
+#    restart: unless-stopped
+    container_name: shopping-db
+    environment:
+      POSTGRES_USER: $(POSTGRES_USER)
+      POSTGRES_PASSWORD: $(POSTGRES_PASSWORD)
+      POSTGRES_DB: $(POSTGRES_DB)
+    ports:
+      - "$(POSTGRES_PORT):5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:
